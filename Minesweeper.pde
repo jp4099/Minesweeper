@@ -58,22 +58,30 @@ public boolean isWon()
 }
 public void displayLosingMessage()
 {
-    for(int i = 0; i < bombs.size();i++)
-    {
-        if(bombs.get(i).isMarked() == false)
-        bombs.get(u).clicked = true;
-    }
-    stroke(255, 0, 0);
-    strokeWeight(10);
+    for(int r = 0; r<NUM_ROWS;r++){
+        for(int c = 0;c<NUM_COLS;c++){
+            if(bombs.contains(buttons[r][c])) {
+              buttons[r][c].setLabel("B");
+              fill(255, 0, 0);
+              bombs.remove(buttons[r][c]);
+              }
+            }
+        }
     text("Sorry You lose!", 150, 200);
     gameOver = true;
 }
 public void displayWinningMessage()
 {
+    for(int r =0;r<NUM_ROWS;r++) {
+        for(int c = 0; c<NUM_COLS;c++) {
+        bombs.remove(buttons[r][c]);
+        }
+    }
     stroke(0, 255, 0);
     strokeWeight(10);
     text("You're such a Winner!", 150, 200);
     gameOver = true;
+    
 }
 
 public class MSButton
@@ -108,19 +116,14 @@ public class MSButton
     {
         if(gameOver == false) 
         {
-            if(mouseButton == LEFT && marked == false){
+            if(mouseButton==LEFT && isMarked()==false && win==false && gameOver==false){
             clicked = true;
-            unClickedTiles--;
             }
-            if(mouseButton == RIGHT && clicked == false)
+            if(mouseButton==RIGHT && isClicked()==false && gameOver == false && win == false)
             {
                 marked = !marked;
-                 if(!isMarked()) 
-                    unmarkedBombs++;
-                else if (isMarked())
-                    unmarkedBombs--;
             }
-            else if (bombs.contains(this) && marked == false) 
+            else if (bombs.contains(this) && isMarked == false) 
                 displayLosingMessage();
             else if (countBombs(r, c)>0)
                 setLabel(str(countBombs(r, c)));
@@ -162,13 +165,23 @@ public class MSButton
     }
     public int countBombs(int row, int col)
     {
-        int numBombs = 0;
-        for(int r = -1; r<=1;r++){
-            for(int c = -1;c <=1; c++){
-                if(isValid(row+r, col+c) && bombs.contains(buttons[row+r][col+c]))
-                    numBombs++;
-            }
-        }
+         int numBombs = 0;
+        if(isValid(row+1,col) && bombs.contains(buttons[row+1][col]))
+            numBombs++;
+        if(isValid(row-1,col) && bombs.contains(buttons[row-1][col]))
+            numBombs++;
+        if(isValid(row,col+1) && bombs.contains(buttons[row][col+1]))
+            numBombs++;
+        if(isValid(row,col-1) && bombs.contains(buttons[row][col-1]))
+            numBombs++;
+        if(isValid(row+1,col+1) && bombs.contains(buttons[row+1][col+1]))
+            numBombs++;
+        if(isValid(row-1,col+1) && bombs.contains(buttons[row-1][col+1]))
+            numBombs++;
+        if(isValid(row+1,col-1) && bombs.contains(buttons[row+1][col-1]))
+            numBombs++;
+        if(isValid(row-1,col-1) && bombs.contains(buttons[row-1][col-1]))
+            numBombs++;
         return numBombs;
     }
 }
