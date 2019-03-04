@@ -1,7 +1,7 @@
 body {
-    background-color: rgb(200,200,200);
-    color: rgb(0,0,0);
-    font-family: "Open Sans", sans-serif;
+    background-image: url('https://pa1.narvii.com/6549/f1acd590b544488e30afc4468e8cd4f57122191d_hq.gif'); background-size:cover;
+    color: rgb(255, 255, 255);
+    font-family: Verdana,Geneva,'Bitstream Vera Sans','DejaVu Sans',sans-serif;
     text-align: center;
 }
 
@@ -16,6 +16,7 @@ header {
 }
 
 footer {
-	font-style: italic;
-	font-size: 90%;
+	font-style: bold;
+	font-size: 120%;
+	color: rgb(255, 255, 255);
 }
